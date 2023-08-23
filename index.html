@@ -12,8 +12,48 @@
         <p class="description">Use this app to keep track of all the books you are reading or would like to read!</p>
     </header>
     <main class="main">
-        <button class="btn-add">+ Add book</button>
+        <button class="add-book-btn" id="add-book-btn">+ Add book</button>
         <div class="all-books-container"></div>
+
+        <dialog id="add-book-dialog">
+            <form method="dialog">
+                <div>
+                    <label>
+                        Title: 
+                        <input type="text" id="book-title-input" name="book-title-input" placeholder="e.g. Charlotte's Web">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Author: 
+                        <input type="text" id="book-author-input" name="book-author-input" placeholder="e.g. E. B. White">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Total # of Pages: 
+                        <input type="number" id="book-total-pages-input" name="book-total-pages-input" placeholder="e.g. 184">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Reading Status: 
+                        <select id="reading-status-input">
+                            <option value="default"></option>
+                            <option value="Not Started">Not Read</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Read">Read</option>
+                        </select>
+                    </label>
+                </div>
+                <div>
+                    <!-- When a form's method is dialog, the state of the form is saved, not submitted, and the dialog gets closed. -->
+                    <button value="cancel" formmethod="dialog">Cancel</button>
+                    <button value="default" id="confirm-btn">Confirm</button>
+                </div>
+            </form>
+        </dialog>
+        
     </main>
     <script src="script.js"></script>
 </body>

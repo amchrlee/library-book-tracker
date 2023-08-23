@@ -32,3 +32,16 @@ function addBookToLibrary(title, author, totalPages, readStatus) {
     myLibrary.push(book);
 }
 
+const addBookBtn = document.getElementById("add-book-btn");
+const addBookDialog = document.getElementById("add-book-dialog");
+const readingStatusInput= document.getElementById("reading-status-input");
+const confirmBtn = document.getElementById("confirm-btn");
+
+addBookBtn.addEventListener("click", () => {
+    addBookDialog.showModal();
+});
+
+confirmBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    addBookDialog.close();
+})
