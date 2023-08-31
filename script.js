@@ -18,19 +18,49 @@ function addBookToLibrary() {
     myLibrary.push(book);
 }
 
+// DIALOG-RELATED ELEMENTS
+const addBookBtn = document.getElementById("add-book-btn");
+const addBookDialog = document.getElementById("add-book-dialog");
+const bookTitleInput = document.getElementById("book-title-input");
+const bookAuthorInput = document.getElementById("book-author-input");
+const bookTotalPagesInput = document.getElementById("book-total-pages-input");
+const bookStatusInput = document.getElementById("reading-status-input");
+const readingStatusInput = document.getElementById("reading-status-input");
+const confirmBtn = document.getElementById("confirm-btn");
+
 // BOOK CARD-RELATED ELEMENTS
 const bookContainer = document.getElementById("all-books-container");
-const bookCard = document.createElement("div");
-const title = document.createElement("p");
-const author = document.createElement("p");
-const totalPages = document.createElement("p");
-const btnContainer = document.createElement("div");
-const readStatusBtn = document.createElement("button");
-const removeBtn = document.createElement("button");
+
+addBookBtn.addEventListener("click", () => {
+    addBookDialog.showModal();
+}); 
+
+confirmBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    addBookToLibrary();
+    addBookDialog.close();
+    createCard(myLibrary[myLibrary.length - 1]);
+    clearBookDialog();
+});
+
+function clearBookDialog() {
+    bookTitleInput.value = "";
+    bookAuthorInput.value = "";
+    bookTotalPagesInput.value = "";
+    readingStatusInput.value = "";
+}
 
 function createCard(book) {
+    const bookCard = document.createElement("div");
+    const title = document.createElement("p");
+    const author = document.createElement("p");
+    const totalPages = document.createElement("p");
+    const btnContainer = document.createElement("div");
+    const readStatusBtn = document.createElement("button");
+    const removeBtn = document.createElement("button");
 
-    bookCard.classList.add("book-card");
+    const libraryArrayLength = String(myLibrary.length);
+    bookCard.classList.add("book-card", "book-" + libraryArrayLength);
     title.classList.add("book-card-title");
     author.classList.add("book-card-author");
     totalPages.classList.add("book-card-total-pages");
@@ -65,25 +95,3 @@ function createCard(book) {
     btnContainer.appendChild(removeBtn);
     bookContainer.appendChild(bookCard);
 }
-
-// DIALOG-RELATED ELEMENTS
-const addBookBtn = document.getElementById("add-book-btn");
-const addBookDialog = document.getElementById("add-book-dialog");
-const bookTitleInput = document.getElementById("book-title-input");
-const bookAuthorInput = document.getElementById("book-author-input");
-const bookTotalPagesInput = document.getElementById("book-total-pages-input");
-const bookStatusInput = document.getElementById("reading-status-input");
-const readingStatusInput = document.getElementById("reading-status-input");
-const confirmBtn = document.getElementById("confirm-btn");
-
-addBookBtn.addEventListener("click", () => {
-    addBookDialog.showModal();
-}); 
-
-confirmBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    addBookToLibrary();
-    addBookDialog.close();
-    createCard(myLibrary[myLibrary.length - 1]);
-});
-
