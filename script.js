@@ -64,13 +64,13 @@ function createCard(book) {
     title.classList.add("book-card-title");
     author.classList.add("book-card-author");
     totalPages.classList.add("book-card-total-pages");
+    btnContainer.classList.add("book-card-btn-container")
     removeBtn.classList.add("book-card-remove");
     readStatusBtn.classList.add("book-card-read-status");
 
     title.textContent = `"${book.title}"`;
     author.textContent = book.author;
-    totalPages.textContent = book.totalPages;    
-    removeBtn.textContent = 'Remove';
+    totalPages.textContent = book.totalPages;
     linkTrashIcon(removeBtn);
 
     if(book.readStatus === "Read") {
