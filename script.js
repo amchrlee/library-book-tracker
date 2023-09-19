@@ -39,9 +39,18 @@ confirmBtn.addEventListener("click", (e) => {
     e.preventDefault();
     addBookToLibrary();
     addBookDialog.close();
-    createCard(myLibrary[myLibrary.length - 1]);
+    printBookCards();
     clearBookDialog();
 });
+
+function printBookCards() {
+    bookContainer.textContent = "";
+    myLibrary.forEach((book, index) => {
+        createCard(book, index);
+    });
+
+    removeBook();
+}
 
 function clearBookDialog() {
     bookTitleInput.value = "";
@@ -50,7 +59,7 @@ function clearBookDialog() {
     readingStatusInput.value = "";
 }
 
-function createCard(book) {
+function createCard(book, index) {
     const bookCard = document.createElement("div");
     const title = document.createElement("p");
     const author = document.createElement("p");
@@ -59,13 +68,14 @@ function createCard(book) {
     const readStatusBtn = document.createElement("button");
     const removeBtn = document.createElement("button");
 
-    const libraryArrayLength = String(myLibrary.length);
-    bookCard.classList.add("book-card", "book-" + libraryArrayLength);
+    bookCard.classList.add("book-card");
+    bookCard.setAttribute('data', index);
     title.classList.add("book-card-title");
     author.classList.add("book-card-author");
     totalPages.classList.add("book-card-total-pages");
     btnContainer.classList.add("book-card-btn-container")
     removeBtn.classList.add("book-card-remove");
+    removeBtn.setAttribute('data', index);
     readStatusBtn.classList.add("book-card-read-status");
 
     title.textContent = `"${book.title}"`;
@@ -106,3 +116,15 @@ function linkTrashIcon(node) {
     iconSvg.appendChild(iconPath);
     return node.appendChild(iconSvg);
 }
+
+function removeBook() {
+    const removeBtns = document.querySelectorAll(".book-card-remove");
+    removeBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            myLibrary.splice(btn.getAttribute('data'), 1);
+            printBookCards();
+        });
+    });
+}
+
+printBookCards();
