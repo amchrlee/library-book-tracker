@@ -59,6 +59,30 @@ dialog {
     display: flex;
 }
 
+.btn-green {
+    background-color: #60fd6d;
+}
+
+.btn-green:hover {
+    background-color: #60fd6d9c;
+}
+
+.btn-yellow {
+    background-color: #fafd57;
+}
+
+.btn-yellow:hover {
+    background-color: #fafd579c;
+}
+
+.btn-red {
+    background-color: #fd5959;
+}
+
+.btn-red:hover {
+    background-color: #fd59599c;
+}
+
 .book-card-remove {
     display: inline-flex;
     align-items: center;

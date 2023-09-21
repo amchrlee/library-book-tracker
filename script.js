@@ -1,4 +1,27 @@
-const myLibrary = [];
+const myLibrary = [
+    {
+        title: "Broken Harbor",
+        author: "Tana French",
+        totalPages: 496,
+        readStatus: "In Progress",
+    },
+    {
+        title: "The Hobbit",
+        author: "J.R.R. Tolkien",
+        totalPages: 366,
+        readStatus: "Not Started",
+    },
+    {
+        title: "The Joy Luck Club",
+        author: "Amy Tan",
+        totalPages: 352,
+        readStatus: "Read",
+    },
+];
+
+Book.prototype.updateReadStatusValue = function(index, value) {
+    myLibrary[index].readStatus = value;
+}
 
 function Book(title, author, totalPages, readStatus) {
     // the constructor...
@@ -26,6 +49,7 @@ const bookAuthorInput = document.getElementById("book-author-input");
 const bookTotalPagesInput = document.getElementById("book-total-pages-input");
 const bookStatusInput = document.getElementById("reading-status-input");
 const readingStatusInput = document.getElementById("reading-status-input");
+const cancelBtn = document.getElementById("cancel-btn");
 const confirmBtn = document.getElementById("confirm-btn");
 
 // BOOK CARD-RELATED ELEMENTS
@@ -34,6 +58,10 @@ const bookContainer = document.getElementById("all-books-container");
 addBookBtn.addEventListener("click", () => {
     addBookDialog.showModal();
 }); 
+
+cancelBtn.addEventListener("click", () => {
+    clearBookDialog();
+});
 
 confirmBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -50,6 +78,7 @@ function printBookCards() {
     });
 
     removeBook();
+    updateReadStatus();
 }
 
 function clearBookDialog() {
@@ -77,6 +106,7 @@ function createCard(book, index) {
     removeBtn.classList.add("book-card-remove");
     removeBtn.setAttribute('data', index);
     readStatusBtn.classList.add("book-card-read-status");
+    readStatusBtn.setAttribute('data', index);
 
     title.textContent = `"${book.title}"`;
     author.textContent = book.author;
@@ -85,13 +115,13 @@ function createCard(book, index) {
 
     if(book.readStatus === "Read") {
         readStatusBtn.textContent = "Read";
-        readStatusBtn.classList.add("btn-green");
+        readStatusBtn.classList.add("read","btn-green");
     } else if (book.readStatus === "In Progress") {
         readStatusBtn.textContent = "In Progress";
-        readStatusBtn.classList.add("btn-yellow");
+        readStatusBtn.classList.add("in-progress","btn-yellow");
     } else {
         readStatusBtn.textContent = "Not Started";
-        readStatusBtn.classList.add("btn-red");
+        readStatusBtn.classList.add("not-started","btn-red");
     }
 
     bookCard.appendChild(title);
@@ -123,6 +153,38 @@ function removeBook() {
         btn.addEventListener("click", () => {
             myLibrary.splice(btn.getAttribute('data'), 1);
             printBookCards();
+        });
+    });
+}
+
+function updateReadStatus() {
+    const readStatusBtns = document.querySelectorAll(".book-card-read-status");
+    readStatusBtns.forEach((btn) => {
+        btn.addEventListener("click", (update) => {
+            const bookIndex = btn.getAttribute('data');
+
+            // create an object this way so I can have the ability to choose the prototype property of the object as the updateReadStatusValue method, which is called later on
+            update = Object.create(Book.prototype);
+            
+            if(btn.textContent === "Read") {
+                let readStatusValue = "Not Started";
+                update.updateReadStatusValue(bookIndex, readStatusValue);
+                btn.textContent = "Not Started";
+                btn.classList.remove("read","btn-green");
+                btn.classList.add("not-started","btn-red");
+            } else if (btn.textContent === "In Progress") {
+                let readStatusValue = "Read";
+                update.updateReadStatusValue(bookIndex, readStatusValue);
+                btn.textContent = "Read";
+                btn.classList.remove("in-progress","btn-yellow");
+                btn.classList.add("read","btn-green");
+            } else {
+                let readStatusValue = "In Progress";
+                update.updateReadStatusValue(bookIndex, readStatusValue);
+                btn.textContent = "In Progress";
+                btn.classList.remove("not-started","btn-red");
+                btn.classList.add("in-progress","btn-yellow");
+            }
         });
     });
 }
